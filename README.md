@@ -74,6 +74,35 @@ $ npx prisma migrate deploy
 $ npx prisma generate
 ```
 
+## Docker Compose
+```bash
+# Start and show log
+$ docker compose --env-file .env.example up
+
+# Start in detach mode
+$ docker compose --env-file .env.example up -d
+
+# Start and rebuild backend image
+$ docker compose --env-file .env.example up -d --build
+
+# Down
+$ docker compose --env-file .env.example down
+```
+
+## Docker
+```bash
+# Log follow backend
+$ docker logs -f backend
+
+# Access backend terminal
+$ docker exec -it backend bash
+
+# Log follow database
+$ docker logs -f db
+
+# Access backend terminal
+$ docker exec -it db bash
+```
 
 ## Auth
 This implementation uses `httpOnly` (server-side) cookie-based authentication. [Read more](https://dev.to/guillerbr/authentication-cookies-http-http-only-jwt-reactjs-context-api-and-node-on-backend-industry-structure-3f8e)

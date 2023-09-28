@@ -24,3 +24,6 @@ CREATE UNIQUE INDEX "User.email_unique" ON "User"("email");
 
 -- AddForeignKey
 ALTER TABLE "Post" ADD FOREIGN KEY ("authorId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- RenameIndex
+ALTER INDEX "User.email_unique" RENAME TO "User_email_key";

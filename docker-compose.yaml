@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  backend:
+    container_name: backend
+    build: .
+    image: backend:latest
+    restart: always
+    environment:
+      NODE_ENV: ${NODE_ENV}
+      DATABASE_URL: ${DATABASE_URL}
+      JWT_SIGNATURE: ${JWT_SIGNATURE}
+      FRONTEND_URL: ${FRONTEND_URL}
+      PORT: ${PORT}
+    volumes:
+      - ./prisma/migrations:/backend/prisma/migrations
+    ports:
+      - ${PORT}:${PORT}
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    image: postgres:14
+    container_name: db
+    environment:
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_DB}
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${DATABASE_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    # volumes:
+    #   - ./database:/var/lib/postgresql/data
+    ports:
+      - ${DATABASE_PORT}:5432
